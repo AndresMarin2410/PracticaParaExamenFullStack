@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -29,4 +31,7 @@ public class Producto {
 
     @Column(nullable = false)
     private int stock;
+
+    @Column(nullable = false, name = "fecha_vencimiento")
+    private LocalDate fechaVencimiento;
 }
