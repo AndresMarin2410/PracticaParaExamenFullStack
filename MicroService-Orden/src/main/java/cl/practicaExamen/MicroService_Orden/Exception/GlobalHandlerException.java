@@ -1,6 +1,6 @@
-package cl.practicaExamen.MicroService_Producto.Exception;
+package cl.practicaExamen.MicroService_Orden.Exception;
 
-import cl.practicaExamen.MicroService_Producto.Dto.ApiErrorResponse;
+import cl.practicaExamen.MicroService_Orden.Dto.ApiErrorResponse;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -16,8 +16,8 @@ import java.util.NoSuchElementException;
 public class GlobalHandlerException {
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ApiErrorResponse> handlerNoSuchElementException(NoSuchElementException ex, HttpServletRequest request) {
-        log.error("Producto no encontrado: {}", ex.getMessage());
+    public ResponseEntity<ApiErrorResponse> NoSuchElementHandlderException(NoSuchElementException ex, HttpServletRequest request) {
+        log.error("Orden no encontrada: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.NOT_FOUND.value())
@@ -29,8 +29,8 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<ApiErrorResponse> handlerConflictException(ConflictException ex, HttpServletRequest request) {
-        log.error("El producto ya existe: {}", ex.getMessage());
+    public ResponseEntity<ApiErrorResponse> conflictHandlerException(ConflictException ex, HttpServletRequest request) {
+        log.error("la orden ya existe: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
                 .status(HttpStatus.CONFLICT.value())
@@ -42,15 +42,17 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ApiErrorResponse> handlerRunTimeException(RuntimeException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorResponse> runTimeHandlerException(RuntimeException ex, HttpServletRequest request) {
         log.error("Error interno del servidor: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .status(HttpStatus.CONFLICT.value())
-                .error(HttpStatus.CONFLICT.name())
-                .message(ex.getMessage())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error(HttpStatus.INTERNAL_SERVER_ERROR.name())
+                .message("Error interno del servidor")
                 .path(request.getRequestURI())
                 .build();
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
+
+
 }

@@ -44,7 +44,7 @@ public class ProductoController {
     @Operation(summary = "Buscar producto por ID", description = "Busca un producto por ID")
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Operacion realizada con exito"),
-            @ApiResponse(responseCode = "404", description = "Producto ono encontrado"),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
             @ApiResponse(responseCode = "500", description = "Error interno del servidor")
     })
     public ProductoResponse buscarProductoPorId(@PathVariable Long id) {
@@ -67,4 +67,31 @@ public class ProductoController {
         return ResponseEntity.status(HttpStatus.CREATED).body(productoService.crearProducto(request));
     }
 
+    @PutMapping("/{id}")
+    @Operation(summary = "Actualizar producto", description = "Actualiza la informacion de un producto")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "200", description = "Operacion realizada con exito",
+            content = @Content(mediaType = "application/json",
+            schema = @Schema(implementation = ProductoResponse.class))),
+            @ApiResponse(responseCode = "400", description = "Datos invalidos"),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    public ResponseEntity<ProductoResponse> actualizarProducto(@Valid Long id, @RequestBody ProductoRequest request) {
+        log.info("PUT /api/producto/{id}");
+        return ResponseEntity.ok(productoService.actualizarProducto(id, request));
+    }
+
+    @DeleteMapping("/{id}")
+    @Operation(summary = "Eliminar producto", description = "Elimina un producto registrado")
+    @ApiResponses(value = {
+            @ApiResponse(responseCode = "204", description = "Producto eliminado con exito"),
+            @ApiResponse(responseCode = "404", description = "Producto no encontrado"),
+            @ApiResponse(responseCode = "500", description = "Error interno del servidor")
+    })
+    public ResponseEntity<Void> eliminarProducto(@PathVariable Long id) {
+        log.info("DELETE /api/producto/{id}");
+        productoService.eliminarProducto(id);
+        return ResponseEntity.noContent().build();
+    }
 }

@@ -1,4 +1,4 @@
-package cl.practicaExamen.MicroService_Producto.Exception;
+package cl.practicaExamen.MicroService_Orden.Exception;
 
 public class ForbiddenException extends RuntimeException {
     public ForbiddenException(String message) {
