@@ -24,13 +24,13 @@ public class Orden {
     private Long idProducto;
 
     @Column(nullable = false)
-    private int cantidad;
+    private Integer cantidad;
 
     @Column(nullable = false)
     private String estado;
 
     @Column(nullable = false)
-    private double precioTotal;
+    private Double precioTotal;
 
     @Column(nullable = false, name = "fecha_orden")
     private LocalDate fechaOrden;

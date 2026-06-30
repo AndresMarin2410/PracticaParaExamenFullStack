@@ -16,7 +16,7 @@ import java.util.NoSuchElementException;
 public class GlobalHandlerException {
 
     @ExceptionHandler(NoSuchElementException.class)
-    public ResponseEntity<ApiErrorResponse> handlerNoSuchElementException(NoSuchElementException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorResponse> noSuchElementException(NoSuchElementException ex, HttpServletRequest request) {
         log.error("Producto no encontrado: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
@@ -29,7 +29,7 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(ConflictException.class)
-    public ResponseEntity<ApiErrorResponse> handlerConflictException(ConflictException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorResponse> conflictHandlerException(ConflictException ex, HttpServletRequest request) {
         log.error("El producto ya existe: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
@@ -42,15 +42,15 @@ public class GlobalHandlerException {
     }
 
     @ExceptionHandler(RuntimeException.class)
-    public ResponseEntity<ApiErrorResponse> handlerRunTimeException(RuntimeException ex, HttpServletRequest request) {
+    public ResponseEntity<ApiErrorResponse> runTimeHandlerException(RuntimeException ex, HttpServletRequest request) {
         log.error("Error interno del servidor: {}", ex.getMessage());
         ApiErrorResponse errorResponse = ApiErrorResponse.builder()
                 .timestamp(LocalDateTime.now())
-                .status(HttpStatus.CONFLICT.value())
-                .error(HttpStatus.CONFLICT.name())
+                .status(HttpStatus.INTERNAL_SERVER_ERROR.value())
+                .error(HttpStatus.INTERNAL_SERVER_ERROR.name())
                 .message(ex.getMessage())
                 .path(request.getRequestURI())
                 .build();
-        return ResponseEntity.status(HttpStatus.CONFLICT).body(errorResponse);
+        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
     }
 }

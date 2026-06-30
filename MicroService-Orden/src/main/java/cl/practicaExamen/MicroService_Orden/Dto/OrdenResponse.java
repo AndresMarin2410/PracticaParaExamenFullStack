@@ -14,8 +14,8 @@ import java.time.LocalDate;
 public class OrdenResponse {
     private Long id;
     private Long idProducto;
-    private int cantidad;
+    private Integer cantidad;
     private String estado;
-    private double precioTotal;
+    private Double precioTotal;
     private LocalDate fechaOrden;
 }

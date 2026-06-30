@@ -19,7 +19,7 @@ public class OrdenRequest {
 
     @NotNull(message = "La cantidad es obligatorio")
     @PositiveOrZero(message = "La cantidad debe ser mayor a 0")
-    private int cantidad;
+    private Integer cantidad;
 
     @NotBlank(message = "El estado es obligatorio")
     @Size(max = 50, message = "El estado tiene un limite de 50 caracteres")
@@ -27,7 +27,7 @@ public class OrdenRequest {
 
     @NotNull(message = "El precio total es obligatorio")
     @PositiveOrZero(message = "El precio total debe ser mayor a 0")
-    private double precioTotal;
+    private Double precioTotal;
 
     @FutureOrPresent(message = "La fecha no puede ser pasada")
     @NotNull(message = "La fecha de la creacion de la orden es obligatoria")
